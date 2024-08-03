@@ -51,7 +51,7 @@ public class Rol {
     @PrePersist
     protected void onCreate() {
         if (this.status == null) {
-            this.status = true; // Establece el valor predeterminado a true
+            this.status = true;
         }
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
