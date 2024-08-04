@@ -26,14 +26,12 @@ public class RolService {
     }
 
     public Rol updateRol(Long id, Rol rolDetails) {
-        Optional<Rol> rolOptional = rolRepository.findById(id);
-        if(rolOptional.isPresent()){
-            Rol rol = rolOptional.get();
-            rol.setDescription(rolDetails.getDescription());
-            return rolRepository.save(rol);
-        }else{
-            return null;
-        }
+        return rolRepository.findById(id).map(existingRol -> {
+            if (rolDetails.getDescription() != null && !rolDetails.getDescription().equals(existingRol.getDescription())) {
+                existingRol.setDescription(rolDetails.getDescription());
+            }
+            return rolRepository.save(existingRol);
+        }).orElse(null);
     }
 
     public void deleteRol(Long id) {
